@@ -63,7 +63,21 @@ const PollReducer = (state: State, { type, payload }: Action) => {
       state.answers[index] = answer;
       return { ...state };
     case DELETE:
+      const voteMap = state.answers.reduce<{ [key: string]: number }>(
+        (acc, answer, i) => {
+          acc[answer] = state.votes[i];
+          return acc;
+        },
+        {}
+      );
       state.answers.splice(payload.index, 1);
+      state.votes = state.answers.reduce<{ [key: number]: number }>(
+        (acc, a, i) => {
+          acc[i] = voteMap[a];
+          return acc;
+        },
+        {}
+      );
       return { ...state };
     case ANSWER:
       const i = state.answers.findIndex((a) => a === payload.answer);
