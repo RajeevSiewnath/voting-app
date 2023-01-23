@@ -64,7 +64,7 @@ export default function PollForm() {
             fullWidth
             label="Question"
             value={state.question}
-            inputProps={{ maxLength: 80 }}
+            inputProps={{ maxLength: 80, "data-testid": "question" }}
             onChange={(e) => setQuestion(e.target.value)}
             helperText={state.question.length === 80 ? 'Maximum character limit reached' : undefined}
           />
@@ -74,12 +74,12 @@ export default function PollForm() {
             <Grid item xs={8} >
               <TextField
                 error={isFieldDuplicate(editAnswerIndex === i ? updateAnswer : a, i)}
-                helperText={isFieldDuplicate(editAnswerIndex === i ? updateAnswer : a, i) ? 'Duplicate answer' : undefined}
+                helperText={isFieldDuplicate(editAnswerIndex === i ? updateAnswer : a, i) ? 'Duplicate answer' : (updateAnswer && updateAnswer.length === 80 ? 'Maximum character limit reached' : undefined)}
                 size="small"
                 fullWidth
                 label={`Answer ${i + 1}`}
                 value={(editAnswerIndex === i ? updateAnswer : a) || ""}
-                inputProps={{ maxLength: 80 }}
+                inputProps={{ maxLength: 80, "data-testid": "update-answer" }}
                 onChange={(e) => setUpdateAnswer(e.target.value)}
                 disabled={editAnswerIndex !== i}
               />
@@ -134,12 +134,13 @@ export default function PollForm() {
           <TextField
             disabled={!Number.isNaN(editAnswerIndex)}
             error={isFieldDuplicate(newAnswer)}
-            helperText={isFieldDuplicate(newAnswer) ? "Duplicate answer" : undefined}
+            helperText={isFieldDuplicate(newAnswer) ? "Duplicate answer" : (newAnswer.length === 80 ? 'Maximum character limit reached' : undefined)}
             size="small"
             fullWidth
             label="New answer"
             value={newAnswer}
             onChange={(e) => setNewAnswer(e.target.value)}
+            inputProps={{ maxLength: 80, "data-testid": "new-answer" }}
           />
         </Grid>
         <Grid item xs={4}>

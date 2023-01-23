@@ -14,8 +14,8 @@ export default function PollQuestion() {
     }
   }, [answer, dispatch, setAnswer])
 
-  if (state.answers.length < 2) {
-    return <p><i>Please provide at least 2 answers</i></p>
+  if (state.answers.length < 2 || state.question.length === 0) {
+    return <p><i>Please provide at least 2 answers and a question</i></p>
   }
 
   return (
